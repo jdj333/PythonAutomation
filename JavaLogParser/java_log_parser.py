@@ -1,4 +1,4 @@
-#Program:       Java Log Praser and Report Generator
+#Program:       Java Log Parser and Report Generator
 #Author:        James Jenkins
 
 import datetime;
@@ -14,6 +14,10 @@ severe_errors = 0;
 errors = 0;
 warnings = 0;
 
+#Error Messages Lists
+root_cause_messages = list()
+casued_by_messages = list()
+
 f = open('large_example_console.log', 'r');
 
 print("Searching for Java Errors...\n");
@@ -25,6 +29,7 @@ for line in f:
     if str.__contains__(line,"Caused by:"):
         #print(line)..
         causedby_errors += 1
+        casued_by_messages.append(line)
     if str.__contains__(line,"jdbc.exceptions"):
         #print(line)
         db_errors += 1
@@ -49,6 +54,9 @@ for line in f:
     if str.__contains__(line,"WARN:"):
         #print(line)
         warnings += 1
+    if str.__contains__(line,"root cause"):
+        #print(line)
+        root_cause_messages.append(line)
 
 print('\nTotal Null Pointer Exceptions: ')
 print(nullpointer_errors)
@@ -70,5 +78,24 @@ print('\nTotal ERROR Exceptions: ')
 print(errors)
 print('\nTotal WARN Exceptions: ')
 print(warnings)
+
+#Prompt user if they would like ot see root causes
+while True:
+    print("Would you like to review the root cause messages? (yes or no)\n")
+    a = input()
+    if a == "yes":
+        print("Generating Messages...\n")
+        #List Out the Root Causes and Caused by messages:
+        for rc in root_cause_messages:
+            print(rc)
+
+        for cb in casued_by_messages:
+            print(cb)
+        break
+    elif a == "no":
+        print("Ok, good bye!\n")
+        break
+    else:
+        print("unknown answer, please enter yes or no")
 
 f.close();

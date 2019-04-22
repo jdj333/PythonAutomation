@@ -16,7 +16,7 @@ warnings = 0;
 
 #Error Messages Lists
 root_cause_messages = list()
-casued_by_messages = list()
+caused_by_messages = list()
 
 f = open('large_example_console.log', 'r');
 
@@ -29,7 +29,7 @@ for line in f:
     if str.__contains__(line,"Caused by:"):
         #print(line)..
         causedby_errors += 1
-        casued_by_messages.append(line)
+        caused_by_messages.append(line)
     if str.__contains__(line,"jdbc.exceptions"):
         #print(line)
         db_errors += 1
@@ -89,7 +89,7 @@ while True:
         for rc in root_cause_messages:
             print(rc)
 
-        for cb in casued_by_messages:
+        for cb in caused_by_messages:
             print(cb)
         break
     elif a == "no":
